@@ -1,4 +1,14 @@
 module Main (main) where
 
+import qualified LazyByteString
+
+import System.Exit
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented."
+main = do
+  good <- and <$> sequence 
+    [ LazyByteString.runTests
+    ]
+  if good
+    then exitSuccess
+    else exitFailure

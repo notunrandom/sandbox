@@ -1,40 +1,41 @@
-cabal-version:   3.12
-name:            sandbox
-version:         0.1.0.0
-license:         NONE
-author:          Unknown
-maintainer:      Unknown
-build-type:      Simple
-extra-doc-files: CHANGELOG.md
+cabal-version:        3.12
+name:                 sandbox
+version:              0.1.0.0
+license:              NONE
+author:               Unknown
+maintainer:           Unknown
+build-type:           Simple
+extra-doc-files:      CHANGELOG.md
 
-common warnings
-    ghc-options: -Wall
+common settings
+
+    ghc-options:      -Wall
+    default-language: Haskell2010
+    build-depends:    base ^>=4.18.3.0
 
 library
-    import:           warnings
+
+    import:           settings
     exposed-modules:  MyLib
-    build-depends:    base ^>=4.18.3.0
     hs-source-dirs:   lib
-    default-language: Haskell2010
 
 executable sandbox
-    import:           warnings
+
+    import:           settings
     main-is:          Main.hs
     build-depends:
-        base ^>=4.18.3.0,
         bytestring,
         serialise,
         sandbox
 
     hs-source-dirs:   exe
-    default-language: Haskell2010
 
 test-suite sandbox-test
-    import:           warnings
-    default-language: Haskell2010
+
+    import:           settings
     type:             exitcode-stdio-1.0
     hs-source-dirs:   tdd
     main-is:          Main.hs
-    build-depends:
-        base ^>=4.18.3.0,
-        sandbox
+    other-modules:    LazyByteString
+    build-depends:    QuickCheck
+                      , sandbox
