@@ -22,6 +22,8 @@ executable sandbox
     main-is:          Main.hs
     build-depends:
         base ^>=4.18.3.0,
+        bytestring,
+        serialise,
         sandbox
 
     hs-source-dirs:   exe
