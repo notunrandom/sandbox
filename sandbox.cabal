@@ -13,21 +13,22 @@ common settings
     default-language: Haskell2010
     build-depends:    base ^>=4.18.3.0
                       , bytestring
+		      , cborg
+		      , serialise
 
 library
 
     import:           settings
-    exposed-modules:  MyLib
+    exposed-modules:  Animal
+                      , Lib
+		      , Shape
     hs-source-dirs:   lib
 
 executable sandbox
 
     import:           settings
     main-is:          Main.hs
-    build-depends:
-        bytestring,
-        serialise,
-        sandbox
+    build-depends:    sandbox
 
     hs-source-dirs:   exe
 
