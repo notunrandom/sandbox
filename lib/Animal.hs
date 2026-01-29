@@ -1,5 +1,9 @@
 {-# LANGUAGE DeriveGeneric #-}
 
+{- Based on Codec.Serialise.Tutorial.
+ - Use Generic instance of encode/decode.
+ -}
+
 module Animal where
 
 import           Codec.Serialise

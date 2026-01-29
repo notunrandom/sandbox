@@ -1,5 +1,9 @@
 module Shape where
 
+{- Based on Codec.Serialise.Tutorial.
+ - Handwritten instance of Serialise
+ -}
+
 import           Codec.CBOR.Encoding
 import           Codec.Serialise
 import           Codec.Serialise.Decoding
@@ -11,7 +15,7 @@ data Shape
   | Rectangle { sideA  :: Double
               , sideB  :: Double
               }
-  deriving (Show)
+  deriving (Eq,Show)
 
 instance Serialise Shape where
   encode = encodeShape
@@ -20,28 +24,29 @@ instance Serialise Shape where
 encodeShape :: Shape -> Encoding
 encodeShape (Circle r) =
   encodeListLen 2
-  <> encodeTag 7
+  <> encodeWord 7
   <> encodeDouble r
 encodeShape (Square x) =
   encodeListLen 2
-  <> encodeTag 8
+  <> encodeWord 8
   <> encodeDouble x
 encodeShape (Rectangle x y) =
   encodeListLen 3
-  <> encodeTag 9
+  <> encodeWord 9
   <> encodeDouble x
   <> encodeDouble y
 
 decodeShape :: Decoder s Shape
 decodeShape = do
   n <- decodeListLen
-  t <- decodeTag
+  t <- decodeWord
   case (n,t) of
     (2, 7) -> Circle    <$> decode
     (2, 8) -> Square    <$> decode
     (3, 9) -> Rectangle <$> decode <*> decode
-    _      -> fail "invalid Animal encoding"
+    _      -> fail "invalid Shape encoding"
 
+newtype ShapeList = ShapeList {getShapeList :: [Shape]}
 
 read :: FilePath -> IO Shape
 read p = deserialise <$> BSL.readFile p
