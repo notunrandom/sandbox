@@ -46,8 +46,6 @@ decodeShape = do
     (3, 9) -> Rectangle <$> decode <*> decode
     _      -> fail "invalid Shape encoding"
 
-newtype ShapeList = ShapeList {getShapeList :: [Shape]}
-
 read :: FilePath -> IO Shape
 read p = deserialise <$> BSL.readFile p
 

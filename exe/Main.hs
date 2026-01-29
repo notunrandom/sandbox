@@ -3,17 +3,18 @@ module Main where
 import           Animal (Animal(..))
 import qualified Animal
 import qualified Lib
-import           Shape (Shape(..))
+import           Shape  (Shape(..))
 import qualified Shape
 
-animalFile :: FilePath
-animalFile = "animals.cbor"
+animalFile, shapeFile, animalEmbeddedFile, shapeEmbeddedFile :: FilePath
+
+animalFile         = "animals.cbor"
+shapeFile          = "shapes.cbor"
+animalEmbeddedFile = "animals-embed.cbor"
+shapeEmbeddedFile  = "shapes-embed.cbor"
 
 fredTheFrog :: Animal
 fredTheFrog = HoppingAnimal "Fred" 4
-
-shapeFile :: FilePath
-shapeFile = "shapes.cbor"
 
 main :: IO ()
 main = do
@@ -23,3 +24,6 @@ main = do
   Lib.write shapeFile (Circle 1.5)
   s <- Shape.read shapeFile
   print s
+  Lib.write animalEmbeddedFile (Animal.SA a)
+  sa <- Animal.readS animalEmbeddedFile
+  print sa
