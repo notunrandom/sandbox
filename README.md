@@ -11,6 +11,7 @@ Current exploration aims to introduce lazy decoding of CBOR-in-CBOR in
 - [x] Find out whether `Codec.Serialise` allows for lazyness
 - [x] Read documentation of `Codec.Serialise` and `Codec.CBOR` to find
   potential solutions
+- [x] Extract CBOR-in-CBOR code from [ouroboros-network][network-fork], learn to use it in the sandbox, start testing its behaviour.
 - [ ] Reproduce lazyness failure of CBOR-in-CBOR in [Block.hs][block-hs]
 - [ ] Explore potential solutions to achieve lazyness of CBOR-in-CBOR decoding
 - [ ] Port solution into [ouroboros-network][network-fork] code
