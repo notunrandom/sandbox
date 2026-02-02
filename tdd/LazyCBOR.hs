@@ -35,7 +35,7 @@ prop_serialiseRoundTrip =
   once $ within 5000000 $
    let
     f  = SA fredTheFrog
-    f' = deserialise $ serialise f
+    f' = head $ deserialise $ serialise $ repeat f
     in f' == f
 
 -----------DO NOT WRITE BELOW THIS LINE (needed for TemplateHaskell)-----------
