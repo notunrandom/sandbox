@@ -5,15 +5,16 @@ Current exploration aims to introduce lazy decoding of CBOR-in-CBOR in
 
 # Roadmap
 
-- [x] Read about Haskell lazyness, monads...
+- [x] Read about Haskell laziness, monads...
 - [x] Learn to use `Codec.Serialise` and `Codec.CBOR` libraries
-- [x] Find out how to test for lazyness
-- [x] Find out whether `Codec.Serialise` allows for lazyness
+- [x] Find out how to test for laziness
+- [x] Find out whether `Codec.Serialise` allows for laziness
 - [x] Read documentation of `Codec.Serialise` and `Codec.CBOR` to find
   potential solutions
-- [x] Extract CBOR-in-CBOR code from [ouroboros-network][network-fork], learn to use it in the sandbox, start testing its behaviour.
-- [ ] Reproduce lazyness failure of CBOR-in-CBOR in [Block.hs][block-hs]
-- [ ] Explore potential solutions to achieve lazyness of CBOR-in-CBOR decoding
+- [x] Extract CBOR-in-CBOR code from [ouroboros-network][network-fork], learn
+  to use it in the sandbox, start testing its behaviour.
+- [ ] Reproduce laziness failure of CBOR-in-CBOR in [Block.hs][block-hs]
+- [ ] Explore potential solutions to achieve laziness of CBOR-in-CBOR decoding
 - [ ] Port solution into [ouroboros-network][network-fork] code
 
 # Technical notes
