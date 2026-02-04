@@ -13,8 +13,14 @@ Current exploration aims to introduce lazy decoding of CBOR-in-CBOR in
   potential solutions
 - [x] Extract CBOR-in-CBOR code from [ouroboros-network][network-fork], learn
   to use it in the sandbox, start testing its behaviour.
-- [ ] Reproduce laziness failure of CBOR-in-CBOR in [Block.hs][block-hs]
+- [x] Reproduce laziness failure of CBOR-in-CBOR in [Block.hs][block-hs]
 - [ ] Explore potential solutions to achieve laziness of CBOR-in-CBOR decoding
+  * [x] Tried replacing strict ST in Codec.Serialise with lazy ST, but this
+    seems to go down a very deep rabbit hole (basically replacing the entire
+    Codec.Serialise and Codec.CBOR.Read code with lazy versions... and
+    CBOR.Read includes some C code, so I stopped there).
+  * [ ] Remove CBOR-in-CBOR and use CBOR.Encoding.encodePreEncoded
+  * [ ] Try writing a completely separate decoder and serialiser for CBOR-in-CBOR
 - [ ] Port solution into [ouroboros-network][network-fork] code
 
 # Technical notes
