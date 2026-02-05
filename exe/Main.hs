@@ -1,29 +1,38 @@
 module Main where
 
-import           Animal (Animal(..))
+import Control.Monad (replicateM)
+import Animal (Animal(..))
+import Codec.CBOR.Encoding 
+import Codec.CBOR.Write
+import Test.QuickCheck
 import qualified Animal
-import qualified Lib
-import           Shape  (Shape(..))
-import qualified Shape
+import qualified Data.ByteString.Lazy as BSL
+import Codec.Serialise (Serialise (..))
+import CBOR
 
-animalFile, shapeFile, animalEmbeddedFile, shapeEmbeddedFile :: FilePath
+genAnimal :: Gen Animal
+genAnimal = oneof 
+  [ WalkingAnimal <$> arbitrary <*> arbitrary
+  , HoppingAnimal <$> arbitrary <*> arbitrary
+  ]
 
-animalFile         = "animals.cbor"
-shapeFile          = "shapes.cbor"
-animalEmbeddedFile = "animals-embed.cbor"
-shapeEmbeddedFile  = "shapes-embed.cbor"
+genAnimals :: Gen [Animal]
+genAnimals = replicateM 1000000 genAnimal
 
-fredTheFrog :: Animal
-fredTheFrog = HoppingAnimal "Fred" 4
+encodeAnimals :: [Animal] -> Encoding 
+encodeAnimals xs = mconcat
+  [ encodeListLenIndef
+  , foldr (\x -> (<> encode x)) mempty xs 
+  , encodeBreak
+  ]
+
+serialiseAnimals :: [Animal] -> BSL.ByteString
+serialiseAnimals = toLazyByteString . encodeAnimals
+
+serialiseAnimals' :: [Animal] -> BSL.ByteString
+serialiseAnimals' = toLazyByteString . encode . Serialised . toLazyByteString . encodeAnimals
 
 main :: IO ()
 main = do
-  Lib.write animalFile fredTheFrog
-  a <- Animal.read animalFile
-  print a
-  Lib.write shapeFile (Circle 1.5)
-  s <- Shape.read shapeFile
-  print s
-  Lib.write animalEmbeddedFile (Animal.SA a)
-  sa <- Animal.readS animalEmbeddedFile
-  print sa
+  animals <- generate genAnimals
+  BSL.writeFile "animals.cbor" (serialiseAnimals' animals)

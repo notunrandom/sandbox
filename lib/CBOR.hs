@@ -43,8 +43,10 @@ fromSerialised dec (Serialised payload) =
 instance Serialise (Serialised a) where
   encode (Serialised bs) = mconcat [
         Enc.encodeTag 24
-      , Enc.encodeBytes (Lazy.toStrict bs)
-      ]
+      , Enc.encodeBytesIndef
+      , Lazy.foldrChunks (\c acc -> acc <> Enc.encodePreEncoded c) mempty bs
+      , Enc.encodeBreak
+      ] 
 
   decode = do
       tag <- Dec.decodeTag

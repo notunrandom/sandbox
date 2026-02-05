@@ -33,6 +33,8 @@ executable sandbox
   import:           settings
   main-is:          Main.hs
   build-depends:    sandbox
+		  , QuickCheck
+		  , serialise
   hs-source-dirs:   exe
 
 test-suite sandbox-test
